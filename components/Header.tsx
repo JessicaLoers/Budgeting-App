@@ -1,13 +1,13 @@
-
+import Button from "./Button"
 
 function Header() {
     return (
         <>
-            <div className="container flex m-4 justify-between">
-                <h1>Budget</h1>
+            <div className="container flex m-4 justify-between items-center">
+            <h1 className="text-3xl font-bold">Budget</h1>
                 <div className="flex m-2">
-                    <button type="button" className="bg-violet-500 px-4 py-2 m-2 rounded-full">Add Budget</button>
-                    <button type="button" className="bg-violet-300 px-4 py-2 m-2 rounded-full">Add Expense</button>
+                    <Button primary>Add Budget</Button>
+                    <Button>Add Expense</Button>
                 </div>
             </div>
         </>
