@@ -12,20 +12,24 @@ function AddBudget({ onCloseAddBudget }: Props) {
         className="fixed inset-0 bg-black bg-opacity-25"
         onClick={onCloseAddBudget}
       ></div>
-      <div className="flex justify-center align-middle">
-        <div className="container gap-4 relative z-20 bg-white rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col">
+      <div className="container absolute flex justify-center align-middle top-8">
+        <div className="gap-8 relative z-20 bg-white rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col sm:w-10/12 md:w-6/12">
           <h2 className="text-2xl font-bold">New Budget</h2>
-          <label className="self-start">Name</label>
-          <input
-            type="text"
-            className="border-black border rounded-2xl border-solid w-9/12"
-          />
-          <label>Max Spending</label>
-          <input
-            type="number"
-            className="border-black border rounded-2xl border-solid w-9/12"
-          />
-          <div className="flex justify-end w-9/12">
+          <div>
+            <label className="block">Name</label>
+            <input
+              type="text"
+              className="border-black border rounded-2xl border-solid p-1 w-full"
+            />
+          </div>
+          <div>
+            <label className="block">Max Spending</label>
+            <input
+              type="number"
+              className="border-black border rounded-2xl border-solid p-1 w-full"
+            />
+          </div>
+          <div className="flex justify-end">
             <Button primary>Add</Button>
             <Button onClickFunction={onCloseAddBudget}>Close</Button>
           </div>
