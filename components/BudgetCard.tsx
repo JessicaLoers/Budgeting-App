@@ -1,6 +1,6 @@
-import { MouseEventHandler } from 'react';
-import BudgetStateInterface from '../types/BudgetStateInterface';
-import Button from './Button';
+import { MouseEventHandler } from "react";
+import BudgetStateInterface from "../types/BudgetStateInterface";
+import Button from "./Button";
 
 interface Props {
   onShowAddExpense: MouseEventHandler;
@@ -25,7 +25,7 @@ function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
       <div className="w-full bg-violet-200 rounded-full h-4 my-8">
         <div
           className="bg-violet-500 h-4 rounded-full"
-          style={{ width: '45%' }}
+          style={{ width: "45%" }}
         ></div>
       </div>
       <div className="flex justify-end items-center">

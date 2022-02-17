@@ -1,11 +1,6 @@
-import React, {
-  ChangeEventHandler,
-  FormEvent,
-  MouseEventHandler,
-  useState,
-} from 'react';
-import BudgetStateInterface from '../types/BudgetStateInterface';
-import Button from './Button';
+import React, { FormEvent, MouseEventHandler, useState } from "react";
+import BudgetStateInterface from "../types/BudgetStateInterface";
+import Button from "./Button";
 
 interface Props {
   onCloseAddBudget: MouseEventHandler;
@@ -16,7 +11,7 @@ interface Props {
 function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
   const initialBudget: BudgetStateInterface = {
     individualExpenses: [],
-    category: '',
+    category: "",
     budget: 0,
     overSpend: false,
   };
