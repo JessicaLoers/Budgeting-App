@@ -6,5 +6,3 @@ interface BudgetStateInterface {
   budget: number;
   overSpend: boolean;
 }
-
-export default BudgetStateInterface

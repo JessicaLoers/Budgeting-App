@@ -1,38 +1,44 @@
-import { MouseEventHandler, useState } from 'react'
-import Button from './Button'
+import React, {
+  ChangeEventHandler,
+  FormEvent,
+  MouseEventHandler,
+  useState,
+} from "react";
+import BudgetStateInterface from "../types/budgetStateInterface";
+import Button from "./Button";
 
 interface Props {
-  onCloseAddBudget: MouseEventHandler
-  onHandleStateChange: Function
-  state: any[]
+  onCloseAddBudget: MouseEventHandler;
+  onHandleStateChange: Function;
+  state: BudgetStateInterface[];
 }
 
 function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
-  const initialBudget = {
+  const initialBudget: BudgetStateInterface = {
     individualExpenses: [],
-    category: '',
+    category: "",
     budget: 0,
     overSpend: false,
-  }
+  };
 
-  const handleChange = (event: any) => {
-    let inputValue = event.target.value
-    setNewBudget({ ...newBudget, [event.target.name]: inputValue })
-    console.log(newBudget)
-  }
+  const handleChange = (event: FormEvent<HTMLInputElement>) => {
+    let inputValue = event.currentTarget.value;
+    setNewBudget({ ...newBudget, [event.currentTarget.name]: inputValue });
+    console.log(newBudget);
+  };
 
-  const [newBudget, setNewBudget] = useState(initialBudget)
+  const [newBudget, setNewBudget] = useState(initialBudget);
 
-  function handleSubmit() {
-    onHandleStateChange([...state, newBudget])
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    onHandleStateChange([...state, newBudget]);
   }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div
         className='fixed inset-0 bg-black bg-opacity-25'
-        onClick={onCloseAddBudget}
-      ></div>
+        onClick={onCloseAddBudget}></div>
       <div className='container absolute flex justify-center align-middle top-8'>
         <div className='gap-8 relative z-20 bg-white rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col sm:w-10/12 md:w-6/12'>
           <h2 className='text-2xl font-bold'>New Budget</h2>
@@ -69,7 +75,7 @@ function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
         </div>
       </div>
     </form>
-  )
+  );
 }
 
-export default AddBudget
+export default AddBudget;

@@ -1,14 +1,10 @@
 import { MouseEventHandler } from "react";
+import BudgetStateInterface from "../types/budgetStateInterface";
 import Button from "./Button";
 
 interface Props {
   onShowAddExpense: MouseEventHandler;
-  categoryBudget: {
-    individualExpenses: any[];
-    category: string;
-    budget: number;
-    overSpend: boolean;
-  };
+  categoryBudget: BudgetStateInterface;
 }
 
 function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
