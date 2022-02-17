@@ -4,7 +4,7 @@ import React, {
   MouseEventHandler,
   useState,
 } from "react";
-import BudgetStateInterface from "../types/budgetStateInterface";
+import BudgetStateInterface from "../types/BudgetStateInterface";
 import Button from "./Button";
 
 interface Props {
