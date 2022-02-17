@@ -22,6 +22,10 @@ const Home: NextPage = () => {
     setShowAddExpense(!showAddExpense)
   }
 
+  function handleStateChange(newState: []) {
+    setState(newState)
+  }
+
   return (
     <div className='container mx-auto'>
       <Header
@@ -39,8 +43,9 @@ const Home: NextPage = () => {
       {showAddBudget && (
         <AddBudget
           state={state}
-          onSetState={setState}
+          onHandleStateChange={handleStateChange}
           onCloseAddBudget={handleShowAddBudget}
+
         />
       )}
       {showAddExpense && (

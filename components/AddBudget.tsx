@@ -3,11 +3,11 @@ import Button from './Button'
 
 interface Props {
   onCloseAddBudget: MouseEventHandler
-  onSetState: Function
+  onHandleStateChange: Function
   state: any[]
 }
 
-function AddBudget({ onCloseAddBudget, onSetState, state }: Props) {
+function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
   const initialBudget = {
     individualExpenses: [],
     category: '',
@@ -24,7 +24,7 @@ function AddBudget({ onCloseAddBudget, onSetState, state }: Props) {
   const [newBudget, setNewBudget] = useState(initialBudget)
 
   function handleSubmit() {
-    onSetState([...state, newBudget])
+    onHandleStateChange([...state, newBudget])
   }
 
   return (
