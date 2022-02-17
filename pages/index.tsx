@@ -1,25 +1,25 @@
-import type { NextPage } from "next";
-import { useState } from "react";
-import Header from "../components/Header";
-import BudgetCard from "../components/BudgetCard";
-import UncategorizedBudgetCard from "../components/UncategorizedBudgetCard";
-import TotalBudgetCard from "../components/TotalBudgetCard";
-import AddBudget from "../components/AddBudget";
-import AddExpense from "../components/AddExpense";
-import stateManagement from "../lib/stateManagement";
+import type { NextPage } from 'next'
+import { useState } from 'react'
+import Header from '../components/Header'
+import BudgetCard from '../components/BudgetCard'
+import UncategorizedBudgetCard from '../components/UncategorizedBudgetCard'
+import TotalBudgetCard from '../components/TotalBudgetCard'
+import AddBudget from '../components/AddBudget'
+import AddExpense from '../components/AddExpense'
+import stateManagement from '../lib/stateManagement'
 
 const Home: NextPage = () => {
-  const [showAddBudget, setShowAddBudget] = useState(false);
-  const [showAddExpense, setShowAddExpense] = useState(false);
+  const [showAddBudget, setShowAddBudget] = useState(false)
+  const [showAddExpense, setShowAddExpense] = useState(false)
 
-  const storage = stateManagement();
+  const { state, setState } = stateManagement()
 
   function handleShowAddBudget() {
-    setShowAddBudget(!showAddBudget);
+    setShowAddBudget(!showAddBudget)
   }
 
   function handleShowAddExpense() {
-    setShowAddExpense(!showAddExpense);
+    setShowAddExpense(!showAddExpense)
   }
 
   return (
@@ -28,7 +28,7 @@ const Home: NextPage = () => {
         onShowAddBudget={handleShowAddBudget}
         onShowAddExpense={handleShowAddExpense}
       />
-      {storage.map((expense) => (
+      {state.map((expense) => (
         <BudgetCard
           onShowAddExpense={handleShowAddExpense}
           categoryBudget={expense}
@@ -36,12 +36,18 @@ const Home: NextPage = () => {
       ))}
       <UncategorizedBudgetCard onShowAddExpense={handleShowAddExpense} />
       <TotalBudgetCard onShowAddExpense={handleShowAddExpense} />
-      {showAddBudget && <AddBudget onCloseAddBudget={handleShowAddBudget} />}
+      {showAddBudget && (
+        <AddBudget
+          state={state}
+          onSetState={setState}
+          onCloseAddBudget={handleShowAddBudget}
+        />
+      )}
       {showAddExpense && (
         <AddExpense onCloseAddExpense={handleShowAddExpense} />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
