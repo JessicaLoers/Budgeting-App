@@ -42,7 +42,7 @@ function AddExpense({ onCloseAddExpense }: Props) {
           </div>
           <div className="flex justify-end">
             <Button primary>Add</Button>
-            <Button onClickFunction={onCloseAddExpense}>Close</Button>
+            <Button onClick={onCloseAddExpense}>Close</Button>
           </div>
         </div>
       </div>

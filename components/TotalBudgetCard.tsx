@@ -21,7 +21,7 @@ function TotalBudgetCard({ onShowAddExpense }: Props) {
         ></div>
       </div>
       <div className="flex justify-end items-center">
-        <Button primary onClickFunction={onShowAddExpense}>
+        <Button primary onClick={onShowAddExpense}>
           Add expense
         </Button>
         <Button>View expense</Button>
