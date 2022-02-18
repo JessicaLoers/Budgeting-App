@@ -3,7 +3,7 @@ import BudgetStateInterface from "../types/BudgetStateInterface";
 import Button from "./Button";
 
 interface Props {
-  onCloseAddExpense: MouseEventHandler;
+  onCloseAddExpense: Function;
   onHandleStateChange: Function;
   state: BudgetStateInterface[];
 }
@@ -20,7 +20,6 @@ function AddExpense({ onCloseAddExpense, onHandleStateChange, state }: Props) {
       inputValue = inputValue === "" ? "" : parseFloat(inputValue);
     }
     setExpense({ ...expense, [event.currentTarget.name]: inputValue });
-    console.log(expense);
   };
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -32,13 +31,14 @@ function AddExpense({ onCloseAddExpense, onHandleStateChange, state }: Props) {
       return budget;
     });
     onHandleStateChange(updatedBudgets);
+    onCloseAddExpense();
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <div
         className="fixed inset-0 bg-black bg-opacity-25"
-        onClick={onCloseAddExpense}
+        onClick={() => onCloseAddExpense()}
       ></div>
       <div className="container absolute flex justify-center align-middle top-8">
         <div className="gap-8 relative z-20 bg-white rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col sm:w-10/12 md:w-6/12">
@@ -80,8 +80,10 @@ function AddExpense({ onCloseAddExpense, onHandleStateChange, state }: Props) {
               onChange={(event) => setCategory(event?.target.value)}
             >
               <option>–– Select Category ––</option>
-              {state.map((budget) => (
-                <option value={budget.category}>{budget.category}</option>
+              {state.map((budget, index) => (
+                <option key={index} value={budget.category}>
+                  {budget.category}
+                </option>
               ))}
             </select>
           </div>
@@ -89,7 +91,7 @@ function AddExpense({ onCloseAddExpense, onHandleStateChange, state }: Props) {
             <Button type="submit" primary>
               Add
             </Button>
-            <Button onClick={onCloseAddExpense}>Close</Button>
+            <Button onClick={() => onCloseAddExpense()}>Close</Button>
           </div>
         </div>
       </div>
