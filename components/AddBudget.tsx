@@ -65,7 +65,9 @@ function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
             />
           </div>
           <div className="flex justify-end">
-            <Button primary>Add</Button>
+            <Button type="submit" primary>
+              Add
+            </Button>
             <Button onClick={onCloseAddBudget}>Close</Button>
           </div>
         </div>

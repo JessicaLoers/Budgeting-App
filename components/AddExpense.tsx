@@ -1,11 +1,12 @@
-import { MouseEventHandler } from 'react';
-import Button from './Button';
+import { MouseEventHandler } from "react";
+import Button from "./Button";
 
 interface Props {
   onCloseAddExpense: MouseEventHandler;
+  onHandleStateChange: Function;
 }
 
-function AddExpense({ onCloseAddExpense }: Props) {
+function AddExpense({ onCloseAddExpense, onHandleStateChange }: Props) {
   return (
     <>
       <div

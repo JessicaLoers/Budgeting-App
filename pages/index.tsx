@@ -1,39 +1,41 @@
-import type { NextPage } from 'next'
-import { useState } from 'react'
-import Header from '../components/Header'
-import BudgetCard from '../components/BudgetCard'
-import UncategorizedBudgetCard from '../components/UncategorizedBudgetCard'
-import TotalBudgetCard from '../components/TotalBudgetCard'
-import AddBudget from '../components/AddBudget'
-import AddExpense from '../components/AddExpense'
-import stateManagement from '../lib/stateManagement'
+import type { NextPage } from "next";
+import { useState } from "react";
+import Header from "../components/Header";
+import BudgetCard from "../components/BudgetCard";
+import UncategorizedBudgetCard from "../components/UncategorizedBudgetCard";
+import TotalBudgetCard from "../components/TotalBudgetCard";
+import AddBudget from "../components/AddBudget";
+import AddExpense from "../components/AddExpense";
+import stateManagement from "../lib/stateManagement";
+import BudgetStateInterface from "../types/BudgetStateInterface";
 
 const Home: NextPage = () => {
-  const [showAddBudget, setShowAddBudget] = useState(false)
-  const [showAddExpense, setShowAddExpense] = useState(false)
+  const [showAddBudget, setShowAddBudget] = useState(false);
+  const [showAddExpense, setShowAddExpense] = useState(false);
 
-  const { state, setState } = stateManagement()
+  const { state, setState } = stateManagement();
 
   function handleShowAddBudget() {
-    setShowAddBudget(!showAddBudget)
+    setShowAddBudget(!showAddBudget);
   }
 
   function handleShowAddExpense() {
-    setShowAddExpense(!showAddExpense)
+    setShowAddExpense(!showAddExpense);
   }
 
-  function handleStateChange(newState: []) {
-    setState(newState)
+  function handleStateChange(newState: BudgetStateInterface[]) {
+    setState(newState);
   }
 
   return (
-    <div className='container mx-auto'>
+    <div className="container mx-auto">
       <Header
         onShowAddBudget={handleShowAddBudget}
         onShowAddExpense={handleShowAddExpense}
       />
-      {state.map((expense) => (
+      {state.map((expense, index) => (
         <BudgetCard
+          key={index}
           onShowAddExpense={handleShowAddExpense}
           categoryBudget={expense}
         />
@@ -45,14 +47,16 @@ const Home: NextPage = () => {
           state={state}
           onHandleStateChange={handleStateChange}
           onCloseAddBudget={handleShowAddBudget}
-
         />
       )}
       {showAddExpense && (
-        <AddExpense onCloseAddExpense={handleShowAddExpense} />
+        <AddExpense
+          onCloseAddExpense={handleShowAddExpense}
+          onHandleStateChange={handleStateChange}
+        />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
