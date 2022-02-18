@@ -1,4 +1,4 @@
-import Expense from './Expense'
+import Expense from "./Expense";
 
 interface BudgetStateInterface {
   individualExpenses: Expense[];
@@ -7,4 +7,4 @@ interface BudgetStateInterface {
   overSpend: boolean;
 }
 
-export default BudgetStateInterface
+export default BudgetStateInterface;

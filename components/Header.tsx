@@ -12,10 +12,10 @@ function Header({ onShowAddBudget, onShowAddExpense }: Props) {
       <div className="flex m-4 justify-between items-center">
         <h1 className="text-3xl font-bold">Budget</h1>
         <div className="flex m-2">
-          <Button primary onClickFunction={onShowAddBudget}>
+          <Button primary onClick={onShowAddBudget}>
             Add Budget
           </Button>
-          <Button onClickFunction={onShowAddExpense}>Add Expense</Button>
+          <Button onClick={onShowAddExpense}>Add Expense</Button>
         </div>
       </div>
     </>
