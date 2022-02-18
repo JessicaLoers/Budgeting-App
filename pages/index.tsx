@@ -5,22 +5,34 @@ import BudgetCard from '../components/BudgetCard';
 import UncategorizedBudgetCard from '../components/UncategorizedBudgetCard';
 import TotalBudgetCard from '../components/TotalBudgetCard';
 import AddBudget from '../components/AddBudget';
+import AddExpense from '../components/AddExpense';
 
 const Home: NextPage = () => {
   const [showAddBudget, setShowAddBudget] = useState(false);
+  const [showAddExpense, setShowAddExpense] = useState(false);
 
   function handleShowAddBudget() {
     setShowAddBudget(!showAddBudget);
   }
 
+  function handleShowAddExpense() {
+    setShowAddExpense(!showAddExpense);
+  }
+
   return (
-    <>
-      <Header onShowAddBudget={handleShowAddBudget} />
-      <BudgetCard />
-      <UncategorizedBudgetCard />
-      <TotalBudgetCard />
+    <div className="container mx-auto">
+      <Header
+        onShowAddBudget={handleShowAddBudget}
+        onShowAddExpense={handleShowAddExpense}
+      />
+      <BudgetCard onShowAddExpense={handleShowAddExpense} />
+      <UncategorizedBudgetCard onShowAddExpense={handleShowAddExpense} />
+      <TotalBudgetCard onShowAddExpense={handleShowAddExpense} />
       {showAddBudget && <AddBudget onCloseAddBudget={handleShowAddBudget} />}
-    </>
+      {showAddExpense && (
+        <AddExpense onCloseAddExpense={handleShowAddExpense} />
+      )}
+    </div>
   );
 };
 
