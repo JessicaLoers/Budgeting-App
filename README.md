@@ -2,9 +2,16 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Day 1
 
--ceate wireframe
--project setup
--import tailwind
+- created budget app wireframe
+- initialized project with next.js
+- imported tailwind
+
+…
+
+## Day 4
+
+- added interfaces for Budget and Expense
+- created form (actions) and state handling when creating a new budget
 
 ## Getting Started
 
