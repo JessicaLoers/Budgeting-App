@@ -3,7 +3,7 @@ import BudgetStateInterface from "../types/BudgetStateInterface";
 import Button from "./Button";
 
 interface Props {
-  onCloseAddBudget: MouseEventHandler;
+  onCloseAddBudget: Function;
   onHandleStateChange: Function;
   state: BudgetStateInterface[];
 }
@@ -27,13 +27,14 @@ function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     onHandleStateChange([...state, newBudget]);
+    onCloseAddBudget();
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <div
         className="fixed inset-0 bg-black bg-opacity-25"
-        onClick={onCloseAddBudget}
+        onClick={() => onCloseAddBudget()}
       ></div>
       <div className="container absolute flex justify-center align-middle top-8">
         <div className="gap-8 relative z-20 bg-white rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col sm:w-10/12 md:w-6/12">
@@ -68,7 +69,7 @@ function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
             <Button type="submit" primary>
               Add
             </Button>
-            <Button onClick={onCloseAddBudget}>Close</Button>
+            <Button onClick={() => onCloseAddBudget()}>Close</Button>
           </div>
         </div>
       </div>
