@@ -19,7 +19,6 @@ function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
   const handleChange = (event: FormEvent<HTMLInputElement>) => {
     let inputValue = event.currentTarget.value;
     setNewBudget({ ...newBudget, [event.currentTarget.name]: inputValue });
-    console.log(newBudget);
   };
 
   const [newBudget, setNewBudget] = useState(initialBudget);

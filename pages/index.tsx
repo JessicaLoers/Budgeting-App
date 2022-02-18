@@ -51,6 +51,7 @@ const Home: NextPage = () => {
       )}
       {showAddExpense && (
         <AddExpense
+          state={state}
           onCloseAddExpense={handleShowAddExpense}
           onHandleStateChange={handleStateChange}
         />
