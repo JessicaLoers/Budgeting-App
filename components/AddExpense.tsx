@@ -6,13 +6,21 @@ interface Props {
   onCloseAddExpense: Function;
   onHandleStateChange: Function;
   state: BudgetStateInterface[];
+  selectedBudget?: string;
 }
 
-function AddExpense({ onCloseAddExpense, onHandleStateChange, state }: Props) {
+function AddExpense({
+  onCloseAddExpense,
+  onHandleStateChange,
+  state,
+  selectedBudget,
+}: Props) {
   const initialExpense = { title: "", expense: 0 };
 
   const [expense, setExpense] = useState(initialExpense);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(
+    selectedBudget ? selectedBudget : ""
+  );
 
   const handleChange = (event: FormEvent<HTMLInputElement>) => {
     let inputValue: string | number = event.currentTarget.value;
@@ -78,6 +86,7 @@ function AddExpense({ onCloseAddExpense, onHandleStateChange, state }: Props) {
               name="category"
               className="border-black border rounded-2xl border-solid p-2 w-full"
               onChange={(event) => setCategory(event?.target.value)}
+              value={category}
             >
               <option>–– Select Category ––</option>
               {state.map((budget, index) => (
