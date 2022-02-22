@@ -15,7 +15,6 @@ const Fade = ({ show, children }: PropsWithChildren<Props>) => {
     if (!show) setRender(false);
   };
 
-  // "h-36 opacity-100" : "h-0 opacity-0"
   return render ? (
     <div
       className={`${
