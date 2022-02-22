@@ -1,13 +1,13 @@
 import { currencyFormatter } from "../lib/numberFormatter";
 import BudgetStateInterface from "../types/BudgetStateInterface";
 import Expense from "../types/Expense";
-import BudgetCard from "./BudgetCard";
 
 interface Props {
   expenses: Expense[];
-  budgets: BudgetStateInterface[];
-  handleBudgetsChange: Function;
-  budgetCategory: string;
+  budgets?: BudgetStateInterface[];
+  handleBudgetsChange?: Function;
+  budgetCategory?: string;
+  handleUncategorizedExpenseDelete?: Function;
 }
 
 function ShowExpenses({
@@ -15,18 +15,21 @@ function ShowExpenses({
   budgets,
   handleBudgetsChange,
   budgetCategory,
+  handleUncategorizedExpenseDelete,
 }: Props) {
   function handleDelete(expenseId: number) {
-    const updatedBudgets = budgets.map((budget) => {
-      if (budget.category === budgetCategory) {
-        const updatedExpenses = expenses.filter(
-          (expense) => expense.id !== expenseId
-        );
-        budget.individualExpenses = updatedExpenses;
-      }
-      return budget;
-    });
-    handleBudgetsChange(updatedBudgets);
+    if (budgets) {
+      const updatedBudgets = budgets.map((budget) => {
+        if (budget.category === budgetCategory) {
+          const updatedExpenses = expenses.filter(
+            (expense) => expense.id !== expenseId
+          );
+          budget.individualExpenses = updatedExpenses;
+        }
+        return budget;
+      });
+      handleBudgetsChange && handleBudgetsChange(updatedBudgets);
+    }
   }
 
   return (
@@ -39,7 +42,11 @@ function ShowExpenses({
               {currencyFormatter.format(Number(expense.expense))}
             </span>
             <button
-              onClick={() => handleDelete(expense.id)}
+              onClick={() => {
+                handleUncategorizedExpenseDelete
+                  ? handleUncategorizedExpenseDelete(expense.id)
+                  : handleDelete(expense.id);
+              }}
               className="basis-1/6"
             >
               X

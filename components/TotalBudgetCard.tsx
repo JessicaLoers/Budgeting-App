@@ -32,7 +32,12 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
       <div className="w-full bg-violet-200 rounded-full h-4 my-8">
         <div
           className="bg-violet-500 h-4 rounded-full"
-          style={{ width: "45%" }}
+          style={{
+            width: `${
+              (100 * Number(totalExpenses)) /
+              budgets.reduce((a, b) => a + Number(b.budget), 0)
+            }%`,
+          }}
         ></div>
       </div>
       <div className="flex justify-end items-center">

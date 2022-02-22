@@ -6,8 +6,9 @@ import ShowExpenses from "./ShowExpenses";
 interface Props {
   onShowAddExpense: (event: MouseEvent, budgetName: string) => void;
   categoryBudget: BudgetStateInterface;
-  budgets: [];
+  budgets: BudgetStateInterface[];
   handleBudgetsChange: Function;
+  onHandleBudgetDelete: Function;
 }
 
 function BudgetCard({
@@ -15,6 +16,7 @@ function BudgetCard({
   categoryBudget,
   budgets,
   handleBudgetsChange,
+  onHandleBudgetDelete,
 }: Props) {
   const [showExpenses, setShowExpenses] = useState<boolean>(false);
 
@@ -24,8 +26,14 @@ function BudgetCard({
 
   return (
     <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12 duration-1000 ease-in">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center relative">
         <h2 className="text-3xl font-bold">{categoryBudget.category}</h2>
+        <button
+          className="absolute right-0 -mr-4 -mt-16 z-10 bg-white p-2"
+          onClick={() => onHandleBudgetDelete(categoryBudget)}
+        >
+          X
+        </button>
         <div>
           <span className="text-2xl">
             {currencyFormatter.format(
@@ -45,7 +53,18 @@ function BudgetCard({
       <div className="w-full bg-violet-200 rounded-full h-4 my-8">
         <div
           className="bg-violet-500 h-4 rounded-full"
-          style={{ width: "45%" }}
+          style={{
+            width: `${
+              (100 *
+                Number(
+                  categoryBudget.individualExpenses.reduce(
+                    (a, b) => a + b.expense,
+                    0
+                  )
+                )) /
+              Number(categoryBudget.budget)
+            }%`,
+          }}
         ></div>
       </div>
       <div className="flex justify-end items-center">
