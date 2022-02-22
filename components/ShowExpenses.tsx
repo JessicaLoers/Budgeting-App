@@ -8,7 +8,8 @@ interface Props {
 function ShowExpenses({ expenses }: Props) {
   return (
     <>
-      <ul className="mt-4 max-h-36 overflow-y-auto">
+      <h3 className="text-2xl">Expenses</h3>
+      <ul className="mt-4">
         {expenses.map((expense, index) => (
           <li key={index} className="flex w-full ">
             <p className="basis-4/6  ">{expense.title}</p>

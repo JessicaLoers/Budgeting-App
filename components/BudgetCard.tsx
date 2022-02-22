@@ -3,6 +3,7 @@ import BudgetStateInterface from "../types/BudgetStateInterface";
 import Button from "./Button";
 import { currencyFormatter } from "../lib/numberFormatter";
 import ShowExpenses from "./ShowExpenses";
+import Fade from "./Fade";
 interface Props {
   onShowAddExpense: (event: MouseEvent, budgetName: string) => void;
   categoryBudget: BudgetStateInterface;
@@ -10,26 +11,6 @@ interface Props {
 
 function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
   const [showExpenses, setShowExpenses] = useState<boolean>(false);
-  const [expensesReady, setExpensesReady] = useState<boolean>(false);
-
-  // Create a DOM reference to the BudgetCard
-  const budgetCardContainer = useRef<HTMLDivElement>(null);
-
-  // This effects watches closely the showExpense state.
-  // It registers two event listeners, one for when the CSS transition starts
-  // and one for when it finishes.
-  // The new state 'expensesReady' will the be set to either true or false when
-  // the budget container is fully expanded (see line 79).
-  useEffect(() => {
-    if (budgetCardContainer && budgetCardContainer.current) {
-      budgetCardContainer.current!.ontransitionstart = () => {
-        setExpensesReady(false);
-      };
-      budgetCardContainer.current!.ontransitionend = () => {
-        setExpensesReady(showExpenses);
-      };
-    }
-  }, [showExpenses]);
 
   function onShowExpenses() {
     setShowExpenses(!showExpenses);
@@ -37,10 +18,9 @@ function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
 
   return (
     <div
-      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] duration-250 ease-in-out ${
-        showExpenses ? "h-[24rem]" : "h-56"
+      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] duration-2000 ease-in-out ${
+        showExpenses ? "h-[26rem]" : "h-[13rem]"
       }`}
-      ref={budgetCardContainer}
     >
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold">{categoryBudget.category}</h2>
@@ -75,10 +55,9 @@ function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
         </Button>
         <Button onClick={onShowExpenses}>View expense</Button>
       </div>
-      {/* Expenses are shown once the transition is completed */}
-      {expensesReady && (
+      <Fade show={showExpenses}>
         <ShowExpenses expenses={categoryBudget.individualExpenses} />
-      )}
+      </Fade>
     </div>
   );
 }
