@@ -1,14 +1,16 @@
 module.exports = {
-  mode: 'jit',
-  //purge: ['./src/**/*.{js,ts,jsx,tsx}'],
-  //container: lg,
+  mode: "jit",
 
   content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty: {
+        height: "height",
+      },
+    },
   },
   plugins: [],
 };

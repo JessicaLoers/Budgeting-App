@@ -1,5 +1,5 @@
-import { MouseEventHandler } from 'react';
-import Button from './Button';
+import { MouseEventHandler } from "react";
+import Button from "./Button";
 
 interface Props {
   onShowAddExpense: MouseEventHandler;
@@ -11,7 +11,7 @@ function UncategorizedBudgetCard({ onShowAddExpense }: Props) {
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold">Uncategorized</h2>
         <div>
-          <span className="text-2xl">$200</span>/ $1000
+          <span className="text-2xl">$200</span>
         </div>
       </div>
       <div className="flex justify-end items-center">

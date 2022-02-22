@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import Header from "../components/Header";
 import BudgetCard from "../components/BudgetCard";
 import UncategorizedBudgetCard from "../components/UncategorizedBudgetCard";
@@ -13,6 +13,7 @@ import useLocalStorage from "../lib/useLocalStorage";
 const Home: NextPage = () => {
   const [showAddBudget, setShowAddBudget] = useState(false);
   const [showAddExpense, setShowAddExpense] = useState(false);
+  const [selectedBudget, setSelectedBudget] = useState("Uncategorized");
 
   const { state, setState } = stateManagement();
   const [storedValue, setValue] = useLocalStorage("_Budgets", []);
@@ -24,8 +25,12 @@ const Home: NextPage = () => {
     setShowAddBudget(!showAddBudget);
   }
 
-  function handleShowAddExpense() {
+  function handleShowAddExpense(
+    _event: SyntheticEvent,
+    budgetName?: string
+  ): void {
     setShowAddExpense(!showAddExpense);
+    budgetName && setSelectedBudget(budgetName);
   }
 
   function handleStateChange(newState: BudgetStateInterface[]) {
@@ -38,15 +43,18 @@ const Home: NextPage = () => {
         onShowAddBudget={handleShowAddBudget}
         onShowAddExpense={handleShowAddExpense}
       />
-      {state.map((expense, index) => (
+      {state.map((budget, index) => (
         <BudgetCard
           key={index}
           onShowAddExpense={handleShowAddExpense}
-          categoryBudget={expense}
+          categoryBudget={budget}
         />
       ))}
       <UncategorizedBudgetCard onShowAddExpense={handleShowAddExpense} />
-      <TotalBudgetCard onShowAddExpense={handleShowAddExpense} />
+      <TotalBudgetCard
+        budgets={state}
+        onShowAddExpense={handleShowAddExpense}
+      />
       {showAddBudget && (
         <AddBudget
           state={state}
@@ -59,6 +67,7 @@ const Home: NextPage = () => {
           state={state}
           onCloseAddExpense={handleShowAddExpense}
           onHandleStateChange={handleStateChange}
+          selectedBudget={selectedBudget}
         />
       )}
     </div>
