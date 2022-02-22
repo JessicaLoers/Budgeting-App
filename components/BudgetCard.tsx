@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import BudgetStateInterface from "../types/BudgetStateInterface";
 import Button from "./Button";
 import { currencyFormatter } from "../lib/numberFormatter";
@@ -10,13 +10,38 @@ interface Props {
 
 function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
   const [showExpenses, setShowExpenses] = useState<boolean>(false);
+  const [expensesReady, setExpensesReady] = useState<boolean>(false);
+
+  // Create a DOM reference to the BudgetCard
+  const budgetCardContainer = useRef<HTMLDivElement>(null);
+
+  // This effects watches closely the showExpense state.
+  // It registers two event listeners, one for when the CSS transition starts
+  // and one for when it finishes.
+  // The new state 'expensesReady' will the be set to either true or false when
+  // the budget container is fully expanded (see line 79).
+  useEffect(() => {
+    if (budgetCardContainer && budgetCardContainer.current) {
+      budgetCardContainer.current!.ontransitionstart = () => {
+        setExpensesReady(false);
+      };
+      budgetCardContainer.current!.ontransitionend = () => {
+        setExpensesReady(showExpenses);
+      };
+    }
+  }, [showExpenses]);
 
   function onShowExpenses() {
     setShowExpenses(!showExpenses);
   }
 
   return (
-    <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] duration-1000 ease-in  ">
+    <div
+      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] duration-250 ease-in-out ${
+        showExpenses ? "h-[24rem]" : "h-56"
+      }`}
+      ref={budgetCardContainer}
+    >
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold">{categoryBudget.category}</h2>
         <div>
@@ -50,7 +75,8 @@ function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
         </Button>
         <Button onClick={onShowExpenses}>View expense</Button>
       </div>
-      {showExpenses && (
+      {/* Expenses are shown once the transition is completed */}
+      {expensesReady && (
         <ShowExpenses expenses={categoryBudget.individualExpenses} />
       )}
     </div>

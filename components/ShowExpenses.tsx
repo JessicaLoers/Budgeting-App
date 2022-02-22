@@ -8,9 +8,9 @@ interface Props {
 function ShowExpenses({ expenses }: Props) {
   return (
     <>
-      <ul className="mt-4">
-        {expenses.map((expense) => (
-          <li className="flex w-full ">
+      <ul className="mt-4 max-h-36 overflow-y-auto">
+        {expenses.map((expense, index) => (
+          <li key={index} className="flex w-full ">
             <p className="basis-4/6  ">{expense.title}</p>
             <span className="basis-1/6 text-right ">
               {currencyFormatter.format(Number(expense.expense))}
