@@ -26,8 +26,7 @@ function UncategorizedBudgetCard({
 
   return (
     <div
-      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out ${
-        showExpenses ? "h-[26rem]" : "h-[13rem]"
+      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out 
       }`}
     >
       <div className="flex justify-between items-center">
@@ -42,7 +41,9 @@ function UncategorizedBudgetCard({
         <Button primary onClick={onShowAddExpense}>
           Add expense
         </Button>
-        <Button onClick={onShowExpenses}>View expense</Button>
+        <Button onClick={onShowExpenses}>
+          {showExpenses ? "Hide expenses" : "View expenses"}
+        </Button>
       </div>
       <Fade show={showExpenses}>
         <ShowExpenses

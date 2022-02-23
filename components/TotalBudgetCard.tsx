@@ -19,13 +19,9 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
 
   const expenses = budgets.map((budget) => budget.individualExpenses).flat();
 
-  const totalExpenses = Number(
-    budgets.map((budget) => getTotalExpenses(budget.individualExpenses))
-  );
-  console.log(totalExpenses);
+  const totalExpenses = Number(getTotalExpenses(expenses));
 
   const totalBudgets = budgets.reduce((a, b) => a + Number(b.budget), 0);
-  console.log(totalBudgets);
 
   const getWidth = () => {
     if (totalExpenses > totalBudgets) {
@@ -67,7 +63,9 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
         <Button primary onClick={onShowAddExpense}>
           Add expense
         </Button>
-        <Button onClick={onShowExpenses}>View expense</Button>
+        <Button onClick={onShowExpenses}>
+          {showExpenses ? "Hide expenses" : "View expenses"}
+        </Button>
       </div>
       <Fade show={showExpenses}>
         <ShowExpenses expenses={expenses} />
