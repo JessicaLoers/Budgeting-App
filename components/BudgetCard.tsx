@@ -3,6 +3,8 @@ import BudgetStateInterface from "../types/BudgetStateInterface";
 import Button from "./Button";
 import { currencyFormatter } from "../lib/numberFormatter";
 import ShowExpenses from "./ShowExpenses";
+import getTotalExpenses from "../lib/getTotalExpenses";
+
 interface Props {
   onShowAddExpense: (event: MouseEvent, budgetName: string) => void;
   categoryBudget: BudgetStateInterface;
@@ -24,6 +26,23 @@ function BudgetCard({
     setShowExpenses(!showExpenses);
   }
 
+  function handleExpenseDelete(expenseId: number) {
+    const updatedBudgets = budgets.map((budget) => {
+      if (budget.category === categoryBudget.category) {
+        const updatedExpenses = categoryBudget.individualExpenses.filter(
+          (expense) => expense.id !== expenseId
+        );
+        budget.individualExpenses = updatedExpenses;
+      }
+      return budget;
+    });
+    handleBudgetsChange(updatedBudgets);
+  }
+
+  const totalExpenses = getTotalExpenses(categoryBudget.individualExpenses);
+
+  const totalBudget = Number(categoryBudget.budget);
+
   return (
     <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12 duration-1000 ease-in">
       <div className="flex justify-between items-center relative">
@@ -36,17 +55,10 @@ function BudgetCard({
         </button>
         <div>
           <span className="text-2xl">
-            {currencyFormatter.format(
-              Number(
-                categoryBudget.individualExpenses.reduce(
-                  (a, b) => a + b.expense,
-                  0
-                )
-              )
-            )}
+            {currencyFormatter.format(totalExpenses)} /{" "}
           </span>
           <span className="text-2xl">
-            / {currencyFormatter.format(Number(categoryBudget.budget))}
+            {currencyFormatter.format(totalBudget)}
           </span>
         </div>
       </div>
@@ -54,16 +66,7 @@ function BudgetCard({
         <div
           className="bg-violet-500 h-4 rounded-full"
           style={{
-            width: `${
-              (100 *
-                Number(
-                  categoryBudget.individualExpenses.reduce(
-                    (a, b) => a + b.expense,
-                    0
-                  )
-                )) /
-              Number(categoryBudget.budget)
-            }%`,
+            width: `${(100 * totalExpenses) / totalBudget}%`,
           }}
         ></div>
       </div>
@@ -79,9 +82,7 @@ function BudgetCard({
       {showExpenses && (
         <ShowExpenses
           expenses={categoryBudget.individualExpenses}
-          budgets={budgets}
-          handleBudgetsChange={handleBudgetsChange}
-          budgetCategory={categoryBudget.category}
+          handleDelete={handleExpenseDelete}
         />
       )}
     </div>

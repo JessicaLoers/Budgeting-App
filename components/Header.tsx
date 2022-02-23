@@ -1,5 +1,6 @@
-import { MouseEventHandler } from 'react';
-import Button from './Button';
+import { MouseEventHandler } from "react";
+import Button from "./Button";
+import ModeToggle from "./ModeToggle";
 
 interface Props {
   onShowAddBudget: MouseEventHandler;
@@ -11,6 +12,7 @@ function Header({ onShowAddBudget, onShowAddExpense }: Props) {
     <>
       <div className="flex m-4 justify-between items-center">
         <h1 className="text-3xl font-bold">Budget</h1>
+        <ModeToggle />
         <div className="flex m-2">
           <Button primary onClick={onShowAddBudget}>
             Add Budget

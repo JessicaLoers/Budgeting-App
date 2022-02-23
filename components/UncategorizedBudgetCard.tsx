@@ -3,6 +3,7 @@ import { currencyFormatter } from "../lib/numberFormatter";
 import Expense from "../types/Expense";
 import Button from "./Button";
 import ShowExpenses from "./ShowExpenses";
+import getTotalExpenses from "../lib/getTotalExpenses";
 
 interface Props {
   onShowAddExpense: MouseEventHandler;
@@ -20,15 +21,15 @@ function UncategorizedBudgetCard({
     setShowExpenses(!showExpenses);
   }
 
+  const totalExpenses = getTotalExpenses(uncategorized);
+
   return (
     <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold">Uncategorized</h2>
         <div>
           <span className="text-2xl">
-            {currencyFormatter.format(
-              Number(uncategorized.reduce((a, b) => a + b.expense, 0))
-            )}
+            {currencyFormatter.format(totalExpenses)}
           </span>
         </div>
       </div>
@@ -41,7 +42,7 @@ function UncategorizedBudgetCard({
       {showExpenses && (
         <ShowExpenses
           expenses={uncategorized}
-          handleUncategorizedExpenseDelete={onHandleUncategorizedDelete}
+          handleDelete={onHandleUncategorizedDelete}
         />
       )}
     </div>

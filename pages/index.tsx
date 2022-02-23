@@ -10,6 +10,8 @@ import stateManagement from "../lib/stateManagement";
 import useLocalStorage from "../lib/useLocalStorage";
 import BudgetStateInterface from "../types/BudgetStateInterface";
 import Expense from "../types/Expense";
+import Background from "../components/Background";
+import { ThemeProvider } from "../themes/mode";
 
 const Home: NextPage = () => {
   const [showAddBudget, setShowAddBudget] = useState(false);
@@ -41,10 +43,10 @@ const Home: NextPage = () => {
 
   function handleBudgetDelete(categoryBudget: BudgetStateInterface) {
     const { category, individualExpenses } = categoryBudget;
-    setUncategorized([
-      ...uncategorized,
-      ...individualExpenses.map((expense) => expense),
-    ]);
+
+    const expenses = individualExpenses.map((expense) => expense);
+    setUncategorized([...uncategorized, ...expenses]);
+
     const updatedBudgets = state.filter(
       (budget) => budget.category !== category
     );
@@ -59,46 +61,50 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className="container mx-auto">
-      <Header
-        onShowAddBudget={handleShowAddBudget}
-        onShowAddExpense={handleShowAddExpense}
-      />
-      {state.map((budget, index) => (
-        <BudgetCard
-          key={index}
-          onShowAddExpense={handleShowAddExpense}
-          categoryBudget={budget}
-          budgets={state}
-          handleBudgetsChange={handleStateChange}
-          onHandleBudgetDelete={handleBudgetDelete}
-        />
-      ))}
-      <UncategorizedBudgetCard
-        onShowAddExpense={handleShowAddExpense}
-        uncategorized={uncategorized}
-        onHandleUncategorizedDelete={handleUncategorizedDelete}
-      />
-      <TotalBudgetCard
-        budgets={state}
-        onShowAddExpense={handleShowAddExpense}
-      />
-      {showAddBudget && (
-        <AddBudget
-          state={state}
-          onHandleStateChange={handleStateChange}
-          onCloseAddBudget={handleShowAddBudget}
-        />
-      )}
-      {showAddExpense && (
-        <AddExpense
-          state={state}
-          onCloseAddExpense={handleShowAddExpense}
-          onHandleStateChange={handleStateChange}
-          selectedBudget={selectedBudget}
-        />
-      )}
-    </div>
+    <ThemeProvider>
+      <Background>
+        <div className="container mx-auto dark:text-white">
+          <Header
+            onShowAddBudget={handleShowAddBudget}
+            onShowAddExpense={handleShowAddExpense}
+          />
+          {state.map((budget, index) => (
+            <BudgetCard
+              key={index}
+              onShowAddExpense={handleShowAddExpense}
+              categoryBudget={budget}
+              budgets={state}
+              handleBudgetsChange={handleStateChange}
+              onHandleBudgetDelete={handleBudgetDelete}
+            />
+          ))}
+          <UncategorizedBudgetCard
+            onShowAddExpense={handleShowAddExpense}
+            uncategorized={uncategorized}
+            onHandleUncategorizedDelete={handleUncategorizedDelete}
+          />
+          <TotalBudgetCard
+            budgets={state}
+            onShowAddExpense={handleShowAddExpense}
+          />
+          {showAddBudget && (
+            <AddBudget
+              state={state}
+              onHandleStateChange={handleStateChange}
+              onCloseAddBudget={handleShowAddBudget}
+            />
+          )}
+          {showAddExpense && (
+            <AddExpense
+              state={state}
+              onCloseAddExpense={handleShowAddExpense}
+              onHandleStateChange={handleStateChange}
+              selectedBudget={selectedBudget}
+            />
+          )}
+        </div>
+      </Background>
+    </ThemeProvider>
   );
 };
 
