@@ -4,6 +4,7 @@ import Expense from "../types/Expense";
 import Button from "./Button";
 import ShowExpenses from "./ShowExpenses";
 import getTotalExpenses from "../lib/getTotalExpenses";
+import Fade from "./Fade";
 
 interface Props {
   onShowAddExpense: MouseEventHandler;
@@ -24,7 +25,11 @@ function UncategorizedBudgetCard({
   const totalExpenses = getTotalExpenses(uncategorized);
 
   return (
-    <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12">
+    <div
+      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out ${
+        showExpenses ? "h-[26rem]" : "h-[13rem]"
+      }`}
+    >
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold">Uncategorized</h2>
         <div>
@@ -39,12 +44,12 @@ function UncategorizedBudgetCard({
         </Button>
         <Button onClick={onShowExpenses}>View expense</Button>
       </div>
-      {showExpenses && (
+      <Fade show={showExpenses}>
         <ShowExpenses
           expenses={uncategorized}
           handleDelete={onHandleUncategorizedDelete}
         />
-      )}
+      </Fade>
     </div>
   );
 }

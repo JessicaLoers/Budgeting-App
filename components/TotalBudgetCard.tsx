@@ -4,6 +4,7 @@ import { currencyFormatter } from "../lib/numberFormatter";
 import BudgetStateInterface from "../types/BudgetStateInterface";
 import getTotalExpenses from "../lib/getTotalExpenses";
 import ShowExpenses from "./ShowExpenses";
+import Fade from "./Fade";
 
 interface Props {
   onShowAddExpense: MouseEventHandler;
@@ -21,11 +22,28 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
   const totalExpenses = Number(
     budgets.map((budget) => getTotalExpenses(budget.individualExpenses))
   );
+  console.log(totalExpenses);
 
   const totalBudgets = budgets.reduce((a, b) => a + Number(b.budget), 0);
+  console.log(totalBudgets);
+
+  const getWidth = () => {
+    if (totalExpenses > totalBudgets) {
+      return 100;
+    } else if (totalBudgets > 0) {
+      const result = (100 * totalExpenses) / totalBudgets;
+      return result;
+    } else {
+      return 0;
+    }
+  };
 
   return (
-    <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12">
+    <div
+      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out ${
+        showExpenses ? "h-[26rem]" : "h-[13rem]"
+      }`}
+    >
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold">Total Budget</h2>
         <div>
@@ -41,13 +59,7 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
         <div
           className="bg-violet-500 dark:bg-teal-200 h-4 rounded-full transition-[width] duration-1000 ease-in-out"
           style={{
-            width: `${
-              totalExpenses > totalBudgets
-                ? 100
-                : totalBudgets > 0
-                ? (100 * totalExpenses) / totalBudgets
-                : 0
-            }%`,
+            width: `${getWidth()}%`,
           }}
         ></div>
       </div>
@@ -57,7 +69,9 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
         </Button>
         <Button onClick={onShowExpenses}>View expense</Button>
       </div>
-      {showExpenses && <ShowExpenses expenses={expenses} />}
+      <Fade show={showExpenses}>
+        <ShowExpenses expenses={expenses} />
+      </Fade>
     </div>
   );
 }

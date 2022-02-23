@@ -48,7 +48,7 @@ function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
               name="category"
               value={newBudget.category}
               type="text"
-              className="border-black border rounded-2xl border-solid p-1 w-full"
+              className="border-black border rounded-2xl border-solid p-1 w-full dark:text-slate-700"
               onChange={handleChange}
             />
           </div>
@@ -61,7 +61,7 @@ function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
               name="budget"
               value={newBudget.budget}
               type="number"
-              className="border-black border rounded-2xl border-solid p-1 w-full"
+              className="border-black border rounded-2xl border-solid p-1 w-full dark:text-slate-700"
               onChange={handleChange}
             />
           </div>

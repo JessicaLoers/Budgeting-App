@@ -47,7 +47,7 @@ function BudgetCard({
 
   return (
     <div
-      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] duration-2000 ease-in-out ${
+      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out ${
         showExpenses ? "h-[26rem]" : "h-[13rem]"
       }`}
     >
