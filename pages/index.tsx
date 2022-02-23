@@ -33,7 +33,7 @@ const Home: NextPage = () => {
     budgetName && setSelectedBudget(budgetName);
   }
 
-  function handleStateChange(newState: BudgetStateInterface[]) {
+  function handleStateChange(newState: []) {
     setState(newState);
   }
 
@@ -48,6 +48,8 @@ const Home: NextPage = () => {
           key={index}
           onShowAddExpense={handleShowAddExpense}
           categoryBudget={budget}
+          budgets={state}
+          handleBudgetsChange={handleStateChange}
         />
       ))}
       <UncategorizedBudgetCard onShowAddExpense={handleShowAddExpense} />

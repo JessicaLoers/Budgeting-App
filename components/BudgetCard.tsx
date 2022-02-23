@@ -6,9 +6,16 @@ import ShowExpenses from "./ShowExpenses";
 interface Props {
   onShowAddExpense: (event: MouseEvent, budgetName: string) => void;
   categoryBudget: BudgetStateInterface;
+  budgets: [];
+  handleBudgetsChange: Function;
 }
 
-function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
+function BudgetCard({
+  onShowAddExpense,
+  categoryBudget,
+  budgets,
+  handleBudgetsChange,
+}: Props) {
   const [showExpenses, setShowExpenses] = useState<boolean>(false);
 
   function onShowExpenses() {
@@ -16,7 +23,7 @@ function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
   }
 
   return (
-    <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] duration-1000 ease-in  ">
+    <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12 duration-1000 ease-in">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold">{categoryBudget.category}</h2>
         <div>
@@ -51,7 +58,12 @@ function BudgetCard({ onShowAddExpense, categoryBudget }: Props) {
         <Button onClick={onShowExpenses}>View expense</Button>
       </div>
       {showExpenses && (
-        <ShowExpenses expenses={categoryBudget.individualExpenses} />
+        <ShowExpenses
+          expenses={categoryBudget.individualExpenses}
+          budgets={budgets}
+          handleBudgetsChange={handleBudgetsChange}
+          budgetCategory={categoryBudget.category}
+        />
       )}
     </div>
   );
