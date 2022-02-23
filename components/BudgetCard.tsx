@@ -4,6 +4,7 @@ import Button from "./Button";
 import { currencyFormatter } from "../lib/numberFormatter";
 import ShowExpenses from "./ShowExpenses";
 import getTotalExpenses from "../lib/getTotalExpenses";
+import { BiTrash } from "react-icons/bi";
 
 interface Props {
   onShowAddExpense: (event: MouseEvent, budgetName: string) => void;
@@ -44,14 +45,14 @@ function BudgetCard({
   const totalBudget = Number(categoryBudget.budget);
 
   return (
-    <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12 duration-1000 ease-in">
+    <div className="rounded-2xl p-4 shadow-xl ring-1 mt-12">
       <div className="flex justify-between items-center relative">
         <h2 className="text-3xl font-bold">{categoryBudget.category}</h2>
         <button
-          className="absolute right-0 -mr-4 -mt-16 z-10 bg-white p-2"
+          className="absolute right-0 -mr-4 -mt-20 z-10 p-2 scale-125"
           onClick={() => onHandleBudgetDelete(categoryBudget)}
         >
-          X
+          <BiTrash />
         </button>
         <div>
           <span className="text-2xl">
@@ -62,9 +63,9 @@ function BudgetCard({
           </span>
         </div>
       </div>
-      <div className="w-full bg-violet-200 rounded-full h-4 my-8">
+      <div className="w-full bg-violet-200 dark:bg-teal-200 rounded-full h-4 my-8">
         <div
-          className="bg-violet-500 h-4 rounded-full"
+          className="bg-violet-500 dark:bg-teal-600 h-4 rounded-full transition-[width] duration-1000 ease-in-out"
           style={{
             width: `${(100 * totalExpenses) / totalBudget}%`,
           }}

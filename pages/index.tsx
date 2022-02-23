@@ -17,7 +17,9 @@ const Home: NextPage = () => {
   const [showAddBudget, setShowAddBudget] = useState(false);
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState("Uncategorized");
-  const [uncategorized, setUncategorized] = useState<Expense[]>([]);
+  const [uncategorizedExpenses, setUncategorizedExpenses] = useState<Expense[]>(
+    []
+  );
 
   const { state, setState } = stateManagement();
   const [storedValue, setValue] = useLocalStorage("_Budgets", []);
@@ -45,7 +47,7 @@ const Home: NextPage = () => {
     const { category, individualExpenses } = categoryBudget;
 
     const expenses = individualExpenses.map((expense) => expense);
-    setUncategorized([...uncategorized, ...expenses]);
+    setUncategorizedExpenses([...uncategorizedExpenses, ...expenses]);
 
     const updatedBudgets = state.filter(
       (budget) => budget.category !== category
@@ -54,10 +56,10 @@ const Home: NextPage = () => {
   }
 
   function handleUncategorizedDelete(uncategorizedId: number) {
-    const updatedUncatgorized = uncategorized.filter(
+    const updatedUncategorized = uncategorizedExpenses.filter(
       (expense) => expense.id !== uncategorizedId
     );
-    setUncategorized(updatedUncatgorized);
+    setUncategorizedExpenses(updatedUncategorized);
   }
 
   return (
@@ -80,7 +82,7 @@ const Home: NextPage = () => {
           ))}
           <UncategorizedBudgetCard
             onShowAddExpense={handleShowAddExpense}
-            uncategorized={uncategorized}
+            uncategorized={uncategorizedExpenses}
             onHandleUncategorizedDelete={handleUncategorizedDelete}
           />
           <TotalBudgetCard

@@ -37,11 +37,13 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
           </span>
         </div>
       </div>
-      <div className="w-full bg-violet-200 rounded-full h-4 my-8">
+      <div className="w-full bg-violet-200 dark:bg-teal-200 rounded-full h-4 my-8">
         <div
-          className="bg-violet-500 h-4 rounded-full"
+          className="bg-violet-500 dark:bg-teal-600 h-4 rounded-full transition-[width] duration-1000 ease-in-out"
           style={{
-            width: `${(100 * totalExpenses) / totalBudgets}%`,
+            width: `${
+              totalBudgets > 0 ? (100 * totalExpenses) / totalBudgets : 0
+            }%`,
           }}
         ></div>
       </div>
