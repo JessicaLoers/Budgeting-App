@@ -11,7 +11,7 @@ function ShowExpenses({ expenses, handleDelete }: Props) {
     <>
       <ul className="mt-4">
         {expenses.map((expense) => (
-          <li className="flex w-full ">
+          <li key={expense.id} className="flex w-full ">
             <p className="basis-4/6  ">{expense.title}</p>
             <span className="basis-1/6 text-right ">
               {currencyFormatter.format(Number(expense.expense))}

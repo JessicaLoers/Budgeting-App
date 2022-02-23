@@ -6,7 +6,6 @@ import UncategorizedBudgetCard from "../components/UncategorizedBudgetCard";
 import TotalBudgetCard from "../components/TotalBudgetCard";
 import AddBudget from "../components/AddBudget";
 import AddExpense from "../components/AddExpense";
-import stateManagement from "../lib/stateManagement";
 import useLocalStorage from "../lib/useLocalStorage";
 import BudgetStateInterface from "../types/BudgetStateInterface";
 import Expense from "../types/Expense";
@@ -21,11 +20,14 @@ const Home: NextPage = () => {
     []
   );
 
-  const { state, setState } = stateManagement();
-  const [storedValue, setValue] = useLocalStorage("_Budgets", []);
+  const [budgets, setBudgets] = useState<BudgetStateInterface[]>([]);
+  const [storedValue, setValue] = useLocalStorage<BudgetStateInterface[]>(
+    "_Budgets",
+    []
+  );
 
-  useEffect(() => setState(storedValue), []);
-  useEffect(() => setValue(state), [state]);
+  useEffect(() => setBudgets(storedValue), []);
+  useEffect(() => setValue(budgets), [budgets]);
 
   function handleShowAddBudget() {
     setShowAddBudget(!showAddBudget);
@@ -40,7 +42,7 @@ const Home: NextPage = () => {
   }
 
   function handleStateChange(newState: []) {
-    setState(newState);
+    setBudgets(newState);
   }
 
   function handleBudgetDelete(categoryBudget: BudgetStateInterface) {
@@ -49,10 +51,10 @@ const Home: NextPage = () => {
     const expenses = individualExpenses.map((expense) => expense);
     setUncategorizedExpenses([...uncategorizedExpenses, ...expenses]);
 
-    const updatedBudgets = state.filter(
+    const updatedBudgets = budgets.filter(
       (budget) => budget.category !== category
     );
-    setState(updatedBudgets);
+    setBudgets(updatedBudgets);
   }
 
   function handleUncategorizedDelete(uncategorizedId: number) {
@@ -70,12 +72,12 @@ const Home: NextPage = () => {
             onShowAddBudget={handleShowAddBudget}
             onShowAddExpense={handleShowAddExpense}
           />
-          {state.map((budget, index) => (
+          {budgets.map((budget, index) => (
             <BudgetCard
               key={index}
               onShowAddExpense={handleShowAddExpense}
               categoryBudget={budget}
-              budgets={state}
+              budgets={budgets}
               handleBudgetsChange={handleStateChange}
               onHandleBudgetDelete={handleBudgetDelete}
             />
@@ -86,19 +88,19 @@ const Home: NextPage = () => {
             onHandleUncategorizedDelete={handleUncategorizedDelete}
           />
           <TotalBudgetCard
-            budgets={state}
+            budgets={budgets}
             onShowAddExpense={handleShowAddExpense}
           />
           {showAddBudget && (
             <AddBudget
-              state={state}
+              state={budgets}
               onHandleStateChange={handleStateChange}
               onCloseAddBudget={handleShowAddBudget}
             />
           )}
           {showAddExpense && (
             <AddExpense
-              state={state}
+              state={budgets}
               onCloseAddExpense={handleShowAddExpense}
               onHandleStateChange={handleStateChange}
               selectedBudget={selectedBudget}
