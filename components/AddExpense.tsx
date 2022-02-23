@@ -45,7 +45,7 @@ function AddExpense({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="dark:bg-slate-500">
       <div
         className="fixed inset-0 bg-black bg-opacity-25"
         onClick={() => onCloseAddExpense()}

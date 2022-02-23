@@ -36,7 +36,8 @@ function AddBudget({ onCloseAddBudget, onHandleStateChange, state }: Props) {
         onClick={() => onCloseAddBudget()}
       ></div>
       <div className="container absolute flex justify-center align-middle top-8">
-        <div className="gap-8 relative z-20 bg-white rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col sm:w-10/12 md:w-6/12">
+        <div className="gap-8 relative z-20 dark:bg-slate-600 rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col sm:w-10/12 md:w-6/12">
+          {" "}
           <h2 className="text-2xl font-bold">New Budget</h2>
           <div>
             <label htmlFor="category" className="block">
