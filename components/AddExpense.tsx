@@ -1,6 +1,7 @@
 import { timeStamp } from "console";
 import { FormEvent, MouseEventHandler, useState } from "react";
 import BudgetStateInterface from "../types/BudgetStateInterface";
+import Expense from "../types/Expense";
 import Button from "./Button";
 
 interface Props {
@@ -18,8 +19,8 @@ function AddExpense({
 }: Props) {
   const initialExpense = { id: new Date().getTime(), title: "", expense: 0 };
 
-  const [expense, setExpense] = useState(initialExpense);
-  const [category, setCategory] = useState(
+  const [expense, setExpense] = useState<Expense>(initialExpense);
+  const [category, setCategory] = useState<string>(
     selectedBudget ? selectedBudget : ""
   );
 

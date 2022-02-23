@@ -6,20 +6,28 @@ import UncategorizedBudgetCard from "../components/UncategorizedBudgetCard";
 import TotalBudgetCard from "../components/TotalBudgetCard";
 import AddBudget from "../components/AddBudget";
 import AddExpense from "../components/AddExpense";
-import stateManagement from "../lib/stateManagement";
-import BudgetStateInterface from "../types/BudgetStateInterface";
 import useLocalStorage from "../lib/useLocalStorage";
+import BudgetStateInterface from "../types/BudgetStateInterface";
+import Expense from "../types/Expense";
+import Background from "../components/Background";
+import { ThemeProvider } from "../themes/mode";
 
 const Home: NextPage = () => {
   const [showAddBudget, setShowAddBudget] = useState(false);
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState("Uncategorized");
+  const [uncategorizedExpenses, setUncategorizedExpenses] = useState<Expense[]>(
+    []
+  );
 
-  const { state, setState } = stateManagement();
-  const [storedValue, setValue] = useLocalStorage("_Budgets", []);
+  const [budgets, setBudgets] = useState<BudgetStateInterface[]>([]);
+  const [storedValue, setValue] = useLocalStorage<BudgetStateInterface[]>(
+    "_Budgets",
+    []
+  );
 
-  useEffect(() => setState(storedValue), []);
-  useEffect(() => setValue(state), [state]);
+  useEffect(() => setBudgets(storedValue), []);
+  useEffect(() => setValue(budgets), [budgets]);
 
   function handleShowAddBudget() {
     setShowAddBudget(!showAddBudget);
@@ -34,45 +42,73 @@ const Home: NextPage = () => {
   }
 
   function handleStateChange(newState: []) {
-    setState(newState);
+    setBudgets(newState);
+  }
+
+  function handleBudgetDelete(categoryBudget: BudgetStateInterface) {
+    const { category, individualExpenses } = categoryBudget;
+
+    const expenses = individualExpenses.map((expense) => expense);
+    setUncategorizedExpenses([...uncategorizedExpenses, ...expenses]);
+
+    const updatedBudgets = budgets.filter(
+      (budget) => budget.category !== category
+    );
+    setBudgets(updatedBudgets);
+  }
+
+  function handleUncategorizedDelete(uncategorizedId: number) {
+    const updatedUncategorized = uncategorizedExpenses.filter(
+      (expense) => expense.id !== uncategorizedId
+    );
+    setUncategorizedExpenses(updatedUncategorized);
   }
 
   return (
-    <div className="container mx-auto">
-      <Header
-        onShowAddBudget={handleShowAddBudget}
-        onShowAddExpense={handleShowAddExpense}
-      />
-      {state.map((budget, index) => (
-        <BudgetCard
-          key={index}
-          onShowAddExpense={handleShowAddExpense}
-          categoryBudget={budget}
-          budgets={state}
-          handleBudgetsChange={handleStateChange}
-        />
-      ))}
-      <UncategorizedBudgetCard onShowAddExpense={handleShowAddExpense} />
-      <TotalBudgetCard
-        budgets={state}
-        onShowAddExpense={handleShowAddExpense}
-      />
-      {showAddBudget && (
-        <AddBudget
-          state={state}
-          onHandleStateChange={handleStateChange}
-          onCloseAddBudget={handleShowAddBudget}
-        />
-      )}
-      {showAddExpense && (
-        <AddExpense
-          state={state}
-          onCloseAddExpense={handleShowAddExpense}
-          onHandleStateChange={handleStateChange}
-          selectedBudget={selectedBudget}
-        />
-      )}
-    </div>
+    <ThemeProvider>
+      <Background>
+        <div className="container mx-auto dark:text-white">
+          <Header
+            onShowAddBudget={handleShowAddBudget}
+            onShowAddExpense={handleShowAddExpense}
+          />
+          {budgets.map((budget, index) => (
+            <BudgetCard
+              key={index}
+              onShowAddExpense={handleShowAddExpense}
+              categoryBudget={budget}
+              budgets={budgets}
+              handleBudgetsChange={handleStateChange}
+              onHandleBudgetDelete={handleBudgetDelete}
+            />
+          ))}
+          <UncategorizedBudgetCard
+            onShowAddExpense={handleShowAddExpense}
+            uncategorized={uncategorizedExpenses}
+            onHandleUncategorizedDelete={handleUncategorizedDelete}
+          />
+          <TotalBudgetCard
+            budgets={budgets}
+            onShowAddExpense={handleShowAddExpense}
+          />
+          {showAddBudget && (
+            <AddBudget
+              state={budgets}
+              onHandleStateChange={handleStateChange}
+              onCloseAddBudget={handleShowAddBudget}
+            />
+          )}
+          {showAddExpense && (
+            <AddExpense
+              state={budgets}
+              onCloseAddExpense={handleShowAddExpense}
+              onHandleStateChange={handleStateChange}
+              selectedBudget={selectedBudget}
+            />
+          )}
+        </div>
+      </Background>
+    </ThemeProvider>
   );
 };
 
