@@ -25,9 +25,18 @@ const Home: NextPage = () => {
     "_Budgets",
     []
   );
+  const [storedUncategorized, setStoredUncategorized] = useLocalStorage<
+    Expense[]
+  >("_UncategorizedExpenses", []);
 
   useEffect(() => setBudgets(storedValue), []);
   useEffect(() => setValue(budgets), [budgets]);
+
+  useEffect(() => setUncategorizedExpenses(storedUncategorized), []);
+  useEffect(
+    () => setStoredUncategorized(uncategorizedExpenses),
+    [uncategorizedExpenses]
+  );
 
   function handleShowAddBudget() {
     setShowAddBudget(!showAddBudget);

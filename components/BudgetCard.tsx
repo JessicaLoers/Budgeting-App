@@ -45,10 +45,15 @@ function BudgetCard({
 
   const totalBudget = Number(categoryBudget.budget);
 
-  const haveExpenses = () => {
-    if (categoryBudget.individualExpenses.length > 0) {
-      return true;
-    } else return false;
+  const getWidth = () => {
+    if (totalExpenses > totalBudget) {
+      return 100;
+    } else if (totalBudget > 0) {
+      const result = (100 * totalExpenses) / totalBudget;
+      return result;
+    } else {
+      return 0;
+    }
   };
 
   return (
@@ -77,11 +82,7 @@ function BudgetCard({
         <div
           className="bg-violet-500 dark:bg-teal-200 h-4 rounded-full transition-[width] duration-1000 ease-in-out"
           style={{
-            width: `${
-              totalExpenses > totalBudget
-                ? 100
-                : (100 * totalExpenses) / totalBudget
-            }%`,
+            width: `${getWidth()}%`,
           }}
         ></div>
       </div>

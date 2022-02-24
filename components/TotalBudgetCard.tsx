@@ -36,9 +36,7 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
 
   return (
     <div
-      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out ${
-        showExpenses ? "h-[26rem]" : "h-[13rem]"
-      }`}
+      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out`}
     >
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold">Total Budget</h2>
