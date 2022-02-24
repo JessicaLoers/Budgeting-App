@@ -56,6 +56,9 @@ function BudgetCard({
     }
   };
 
+  const hasExpenses = (budget: BudgetStateInterface) =>
+    budget.individualExpenses.length > 0;
+
   return (
     <div
       className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out
@@ -93,7 +96,10 @@ function BudgetCard({
         >
           Add expense
         </Button>
-        <Button onClick={onShowExpenses}>
+        <Button
+          onClick={onShowExpenses}
+          disabled={!hasExpenses(categoryBudget)}
+        >
           {showExpenses ? "Hide expenses" : "View expenses"}
         </Button>
       </div>
