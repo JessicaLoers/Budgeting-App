@@ -50,37 +50,43 @@ function BudgetCard({
 
   const totalBudget = Number(categoryBudget.budget);
 
+  const result = (100 * totalExpenses) / totalBudget > 90;
+  const isBudgetEmpty = () =>
+    result
+      ? "bg-gradient-to-r from-violet-500 to-red-500 dark:bg--gtradient-to-r dark:from-teal-200 dark:to-red-500"
+      : "bg-violet-500 dark:bg-teal-200";
+
   return (
     <div
-      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out
-      }`}
+      className={`rounded-2xl p-4 shadow-lg ring-1 ring-slate-200 mt-12 transition-[height] h-min duration-2000 ease-in-out 
+      `}
     >
-      <div className="flex justify-between items-center relative">
-        <h2 className="text-3xl font-bold">{categoryBudget.category}</h2>
+      <div
+        className={`flex justify-between items-center relative ${
+          result ? "text-red-500" : "text-black dark:text-white"
+        }`}
+      >
+        <h2>{categoryBudget.category}</h2>
         <button
           className="absolute right-0 -mr-4 -mt-20 z-10 p-2 scale-125"
           onClick={() => onHandleBudgetDelete(categoryBudget)}
         >
-          <BiTrash />
+          <BiTrash className="text-black dark:text-white" />
         </button>
         <div>
-          <span className="text-2xl">
-            {currencyFormatter.format(totalExpenses)} /{" "}
-          </span>
-          <span className="text-2xl">
-            {currencyFormatter.format(totalBudget)}
-          </span>
+          <span>{currencyFormatter.format(totalExpenses)} / </span>
+          <span>{currencyFormatter.format(totalBudget)}</span>
         </div>
       </div>
       <div className="w-full bg-violet-200 dark:bg-teal-600 rounded-full h-4 my-8">
         <div
-          className="bg-violet-500 dark:bg-teal-200 h-4 rounded-full transition-[width] duration-1000 ease-in-out"
+          className={`${isBudgetEmpty()} h-4 rounded-full transition-[width] duration-1000 ease-in-out `}
           style={{
             width: `${getWidth(totalExpenses, totalBudget)}%`,
           }}
         ></div>
       </div>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-center md:justify-end items-center">
         <Button
           primary
           onClick={(event) => onShowAddExpense(event, categoryBudget.category)}

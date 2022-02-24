@@ -29,18 +29,16 @@ function UncategorizedBudgetCard({
 
   return (
     <div
-      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out 
+      className={`rounded-2xl p-4 shadow-lg ring-1 ring-slate-200 mt-12 transition-[height] h-min duration-2000 ease-in-out 
       }`}
     >
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold">Uncategorized</h2>
+      <div className="flex justify-between items-center mb-8">
+        <h2>Uncategorized</h2>
         <div>
-          <span className="text-2xl">
-            {currencyFormatter.format(totalExpenses)}
-          </span>
+          <span>{currencyFormatter.format(totalExpenses)}</span>
         </div>
       </div>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-center md:justify-end items-center">
         <Button primary onClick={onShowAddExpense}>
           Add expense
         </Button>

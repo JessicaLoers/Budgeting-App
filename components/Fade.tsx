@@ -18,8 +18,10 @@ const Fade = ({ show, children }: PropsWithChildren<Props>) => {
   return render ? (
     <div
       className={`${
-        show ? "h-min max-h-[13rem] opacity-100" : " max-h-0 opacity-0"
-      } transition-all duration-2000 overflow-y-scroll`}
+        show
+          ? "h-min max-h-[13rem] opacity-100  overflow-y-auto"
+          : " max-h-0 opacity-0"
+      } transition-all duration-2000 overflow-y-auto`}
       onAnimationEnd={onAnimationEnd}
     >
       {children}

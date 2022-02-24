@@ -7,6 +7,7 @@ import Fade from "./Fade";
 import {
   currencyFormatter,
   getTotalExpenses,
+  getWidth,
 } from "../lib/budgetCardFunctions";
 
 interface Props {
@@ -26,41 +27,36 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
 
   const totalBudgets = budgets.reduce((a, b) => a + Number(b.budget), 0);
 
-  const getWidth = () => {
-    if (totalExpenses > totalBudgets) {
-      return 100;
-    } else if (totalBudgets > 0) {
-      const result = (100 * totalExpenses) / totalBudgets;
-      return result;
-    } else {
-      return 0;
-    }
-  };
+  const result = (100 * totalExpenses) / totalBudgets > 90;
+  const isBudgetEmpty = () =>
+    result
+      ? "bg-gradient-to-r from-violet-500 to-red-500 dark:bg--gtradient-to-r dark:from-teal-200 dark:to-red-500"
+      : "bg-violet-500 dark:bg-teal-200";
 
   return (
     <div
-      className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out`}
+      className={`rounded-2xl p-4 shadow-lg ring-1 ring-slate-200 mt-12 transition-[height] h-min duration-2000 ease-in-out`}
     >
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold">Total Budget</h2>
+      <div
+        className={`flex justify-between items-center relative ${
+          result ? "text-red-500" : "text-black dark:text-white"
+        }`}
+      >
+        <h2>Total Budget</h2>
         <div>
-          <span className="text-2xl">
-            {currencyFormatter.format(totalExpenses)} /{" "}
-          </span>
-          <span className="text-2xl">
-            {currencyFormatter.format(totalBudgets)}
-          </span>
+          <span>{currencyFormatter.format(totalExpenses)} / </span>
+          <span>{currencyFormatter.format(totalBudgets)}</span>
         </div>
       </div>
       <div className="w-full bg-violet-200 dark:bg-teal-600 rounded-full h-4 my-8">
         <div
-          className="bg-violet-500 dark:bg-teal-200 h-4 rounded-full transition-[width] duration-1000 ease-in-out"
+          className={`${isBudgetEmpty()} h-4 rounded-full transition-[width] duration-1000 ease-in-out `}
           style={{
-            width: `${getWidth()}%`,
+            width: `${getWidth(totalExpenses, totalBudgets)}%`,
           }}
         ></div>
       </div>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-center md:justify-end items-center">
         <Button primary onClick={onShowAddExpense}>
           Add expense
         </Button>

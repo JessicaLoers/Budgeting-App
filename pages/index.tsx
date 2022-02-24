@@ -76,7 +76,7 @@ const Home: NextPage = () => {
   return (
     <ThemeProvider>
       <Background>
-        <div className="container mx-auto dark:text-white">
+        <div className="container mx-auto dark:text-white selection:text-violet-500 dark:selection:text-teal-200">
           <Header
             onShowAddBudget={handleShowAddBudget}
             onShowAddExpense={handleShowAddExpense}

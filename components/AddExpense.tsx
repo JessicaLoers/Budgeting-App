@@ -17,7 +17,7 @@ function AddExpense({
   state,
   selectedBudget,
 }: Props) {
-  const initialExpense = { id: new Date().getTime(), title: "", expense: 0 };
+  const initialExpense = { id: Date.now(), title: "", expense: 0 };
 
   const [expense, setExpense] = useState<Expense>(initialExpense);
   const [category, setCategory] = useState<string>(
