@@ -1,5 +1,5 @@
-import { currencyFormatter } from "../lib/numberFormatter";
 import Expense from "../types/Expense";
+import { currencyFormatter } from "../lib/budgetCardFunctions";
 
 interface Props {
   expenses: Expense[];

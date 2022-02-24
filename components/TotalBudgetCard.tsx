@@ -1,10 +1,13 @@
 import { MouseEventHandler, useState } from "react";
 import Button from "./Button";
-import { currencyFormatter } from "../lib/numberFormatter";
 import BudgetStateInterface from "../types/BudgetStateInterface";
-import getTotalExpenses from "../lib/getTotalExpenses";
 import ShowExpenses from "./ShowExpenses";
 import Fade from "./Fade";
+
+import {
+  currencyFormatter,
+  getTotalExpenses,
+} from "../lib/budgetCardFunctions";
 
 interface Props {
   onShowAddExpense: MouseEventHandler;
@@ -61,7 +64,7 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
         <Button primary onClick={onShowAddExpense}>
           Add expense
         </Button>
-        <Button onClick={onShowExpenses}>
+        <Button onClick={onShowExpenses} disabled={expenses.length === 0}>
           {showExpenses ? "Hide expenses" : "View expenses"}
         </Button>
       </div>

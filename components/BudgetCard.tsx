@@ -1,11 +1,16 @@
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, useState } from "react";
 import BudgetStateInterface from "../types/BudgetStateInterface";
 import Button from "./Button";
-import { currencyFormatter } from "../lib/numberFormatter";
 import ShowExpenses from "./ShowExpenses";
 import Fade from "./Fade";
-import getTotalExpenses from "../lib/getTotalExpenses";
 import { BiTrash } from "react-icons/bi";
+
+import {
+  currencyFormatter,
+  getTotalExpenses,
+  getWidth,
+  hasExpenses,
+} from "../lib/budgetCardFunctions";
 
 interface Props {
   onShowAddExpense: (event: MouseEvent, budgetName: string) => void;
@@ -45,20 +50,6 @@ function BudgetCard({
 
   const totalBudget = Number(categoryBudget.budget);
 
-  const getWidth = () => {
-    if (totalExpenses > totalBudget) {
-      return 100;
-    } else if (totalBudget > 0) {
-      const result = (100 * totalExpenses) / totalBudget;
-      return result;
-    } else {
-      return 0;
-    }
-  };
-
-  const hasExpenses = (budget: BudgetStateInterface) =>
-    budget.individualExpenses.length > 0;
-
   return (
     <div
       className={`rounded-2xl p-4 shadow-xl ring-1 mt-12 transition-[height] h-min duration-2000 ease-in-out
@@ -85,7 +76,7 @@ function BudgetCard({
         <div
           className="bg-violet-500 dark:bg-teal-200 h-4 rounded-full transition-[width] duration-1000 ease-in-out"
           style={{
-            width: `${getWidth()}%`,
+            width: `${getWidth(totalExpenses, totalBudget)}%`,
           }}
         ></div>
       </div>
