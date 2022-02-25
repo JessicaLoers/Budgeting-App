@@ -11,7 +11,7 @@ function Header({ onShowAddBudget, onShowAddExpense }: Props) {
   return (
     <>
       <div className="flex md:flex-row flex-col m-4 justify-between items-center">
-        <h1 className="text-3xl font-bold">Budget</h1>
+        <h1>Budgeting-App</h1>
         <ModeToggle />
         <div className="flex m-2">
           <Button primary onClick={onShowAddBudget}>

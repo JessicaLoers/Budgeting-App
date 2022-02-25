@@ -17,7 +17,7 @@ function AddExpense({
   state,
   selectedBudget,
 }: Props) {
-  const initialExpense = { id: new Date().getTime(), title: "", expense: 0 };
+  const initialExpense = { id: Date.now(), title: "", expense: 0 };
 
   const [expense, setExpense] = useState<Expense>(initialExpense);
   const [category, setCategory] = useState<string>(
@@ -45,13 +45,13 @@ function AddExpense({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="dark:bg-slate-500">
       <div
         className="fixed inset-0 bg-black bg-opacity-25"
         onClick={() => onCloseAddExpense()}
       ></div>
       <div className="container absolute flex justify-center align-middle top-8">
-        <div className="gap-8 relative z-20 bg-white rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col sm:w-10/12 md:w-6/12">
+        <div className="gap-8 relative z-20 bg-white dark:bg-slate-600 rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col sm:w-10/12 md:w-6/12">
           <h2 className="text-2xl font-bold">New Expense</h2>
           <div>
             <label htmlFor="title" className="block">
@@ -62,7 +62,7 @@ function AddExpense({
               name="title"
               value={expense.title}
               type="text"
-              className="border-black border rounded-2xl border-solid p-1 w-full"
+              className="border-black border rounded-2xl border-solid p-1 w-full dark:text-slate-700"
               onChange={handleChange}
             />
           </div>
@@ -75,7 +75,7 @@ function AddExpense({
               name="expense"
               value={expense.expense}
               type="number"
-              className="border-black border rounded-2xl border-solid p-1 w-full"
+              className="border-black border rounded-2xl border-solid p-1 w-full dark:text-slate-700"
               onChange={handleChange}
             />
           </div>
@@ -86,7 +86,7 @@ function AddExpense({
             <select
               id="category"
               name="category"
-              className="border-black border rounded-2xl border-solid p-2 w-full"
+              className="border-black border rounded-2xl border-solid p-2 w-full dark:text-slate-700"
               onChange={(event) => setCategory(event?.target.value)}
               value={category}
             >
