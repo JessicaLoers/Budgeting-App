@@ -29,7 +29,7 @@ function UncategorizedBudgetCard({
 
   return (
     <div
-      className={`rounded-2xl p-4 shadow-lg ring-1 ring-slate-200 mt-12 transition-[height] h-min duration-2000 ease-in-out 
+      className={`rounded-2xl p-4 shadow-lg ring-1 dark:ring-slate-600 ring-slate-200 mt-12 transition-[height] h-min duration-2000 ease-in-out 
       }`}
     >
       <div className="flex justify-between items-center mb-8">

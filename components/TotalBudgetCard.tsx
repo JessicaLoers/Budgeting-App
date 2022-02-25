@@ -27,19 +27,25 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
 
   const totalBudgets = budgets.reduce((a, b) => a + Number(b.budget), 0);
 
-  const result = (100 * totalExpenses) / totalBudgets > 90;
+  const budgetWarning = (100 * totalExpenses) / totalBudgets > 90;
   const isBudgetEmpty = () =>
-    result
-      ? "bg-gradient-to-r from-violet-500 to-red-500 dark:bg--gtradient-to-r dark:from-teal-200 dark:to-red-500"
+    budgetWarning
+      ? "bg-gradient-to-r from-violet-500 to-red-500 dark:bg--gtradient-to-r dark:from-teal-200 dark:to-fuchsia-600"
       : "bg-violet-500 dark:bg-teal-200";
 
   return (
     <div
-      className={`rounded-2xl p-4 shadow-lg ring-1 ring-slate-200 mt-12 transition-[height] h-min duration-2000 ease-in-out`}
+      className={`${
+        budgetWarning
+          ? "shadow-fuchsia-800 dark:shadow-fuchsia-400/70"
+          : "dark:shadow-teal-500/70"
+      } rounded-2xl p-4 shadow-lg ring-1 dark:ring-slate-600 ring-slate-200 mt-12 transition-[height] h-min duration-2000 ease-in-out`}
     >
       <div
         className={`flex justify-between items-center relative ${
-          result ? "text-red-500" : "text-black dark:text-white"
+          budgetWarning
+            ? "text-fuchsia-800 dark:text-fuchsia-400"
+            : "text-black dark:text-white"
         }`}
       >
         <h2>Total Budget</h2>
