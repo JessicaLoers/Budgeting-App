@@ -38,7 +38,7 @@ function TotalBudgetCard({ onShowAddExpense, budgets }: Props) {
       className={`${
         budgetWarning
           ? "shadow-fuchsia-800 dark:shadow-fuchsia-400/70"
-          : "dark:shadow-teal-500/70"
+          : "shadow-lg"
       } rounded-2xl p-4 shadow-lg ring-1 dark:ring-slate-600 ring-slate-200 mt-12 transition-[height] h-min duration-2000 ease-in-out`}
     >
       <div
