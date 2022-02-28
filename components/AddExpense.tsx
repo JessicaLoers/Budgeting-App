@@ -50,8 +50,8 @@ function AddExpense({
         className="fixed inset-0 bg-black bg-opacity-25"
         onClick={() => onCloseAddExpense()}
       ></div>
-      <div className="container absolute flex justify-center align-middle top-8">
-        <div className="gap-8 relative z-20 bg-white dark:bg-slate-600 rounded-2xl py-8 px-16 shadow-xl ring-1 flex flex-col sm:w-10/12 md:w-6/12">
+      <div className="w-11/12 md:container absolute flex justify-center align-middle top-32">
+        <div className="gap-8 relative z-20 bg-white dark:bg-slate-600 rounded-2xl py-8 px-10 shadow-xl dark:ring-slate-600 ring-slate-200 flex flex-col sm:w-10/12 md:w-6/12">
           <h2 className="text-2xl font-bold">New Expense</h2>
           <div>
             <label htmlFor="title" className="block">

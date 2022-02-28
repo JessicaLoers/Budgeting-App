@@ -61,7 +61,7 @@ function BudgetCard({
       className={`${
         budgetWarning
           ? "shadow-fuchsia-800 dark:shadow-fuchsia-400/70"
-          : "dark:shadow-teal-500/70"
+          : "shadow-lg"
       } rounded-2xl p-4 shadow-lg ring-1 dark:ring-slate-600 ring-slate-200 mt-12 transition-[height] h-min duration-2000 ease-in-out 
       `}
     >
@@ -74,14 +74,14 @@ function BudgetCard({
       >
         <h2>{categoryBudget.category}</h2>
         <button
-          className="absolute right-0 -mr-4 -mt-20 z-10 p-2 scale-125"
+          className="absolute right-0 -mr-2 -mt-16 z-10 p-2 scale-125"
           onClick={() => onHandleBudgetDelete(categoryBudget)}
         >
           <BiTrash className="text-black dark:text-white" />
         </button>
-        <div>
+        <div className="flex flex-wrap justify-center">
           <span>{currencyFormatter.format(totalExpenses)} / </span>
-          <span>{currencyFormatter.format(totalBudget)}</span>
+          <span> {currencyFormatter.format(totalBudget)}</span>
         </div>
       </div>
       <div className="w-full bg-violet-200 dark:bg-teal-600 rounded-full h-4 my-8">
